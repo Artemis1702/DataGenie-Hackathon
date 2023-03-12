@@ -10,10 +10,6 @@ from DataGenie_HaCK import connect
 
 app = FastAPI()
 
-@app.get("/{id}")
-def read_root(id: int):
-    return {"Hello": id}
-
 
 class DateListRequest(BaseModel):
     date_from: date
@@ -29,11 +25,6 @@ async def predict(date_from: str, date_to: str, period: Optional[int] = 0):
         date_to = datetime.strptime(date_to, "%Y-%m-%d")
 
     
-    # Generate the time series data based on the input dates
-    index = pd.date_range(date_from, date_to, freq="D")
-    data = pd.DataFrame(index=index)
-
-    np.savetxt('C:\\Users\\tejas\\Desktop\\trial.tct', data.values)
     # Call function to determine the best time series model and make predictions
     best, mape, pred1, ind, val1 = connect(date_from, date_to, period)
 
