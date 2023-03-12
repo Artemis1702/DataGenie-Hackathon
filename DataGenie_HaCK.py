@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[227]:
+# In[274]:
 
 
 import pandas as pd
@@ -11,6 +11,7 @@ import statsmodels.api as sm
 from statsmodels.tsa.exponential_smoothing.ets import ETSModel
 import xgboost as xgb
 from sklearn.metrics import mean_absolute_percentage_error
+from datetime import datetime, timedelta
 
 
 # In[228]:
@@ -282,11 +283,15 @@ def predict1(start_date, end_date, best_model, data):
     return mape, pred 
 
 
-# In[270]:
+# In[277]:
 
 
 # This is the connecter function which gives me all the desired outputs needed for FAST API
-def connect(start_date, end_date):
+def connect(start_date, end_date, period):
+    if period > 0:
+        end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        end_date = end_date + timedelta(days=period)
+        end_date = end_date.strftime('%Y-%m-%d')
     data1 = data.loc[start_date:end_date]
     val = data1['point_value'].tolist()
     best = selection(start_date, end_date, data1)
@@ -294,6 +299,7 @@ def connect(start_date, end_date):
     predi = list(predi)
     ind1 = data1.index.tolist()
     ind = []
+#     Convertin datetime object to string
     for i in ind1:
         temp = i.strftime('%Y-%m-%d %H:%M:%S')
         ind.append(temp)
@@ -301,10 +307,10 @@ def connect(start_date, end_date):
 #     print(ind)
 
 
-# In[271]:
+# In[279]:
 
 
-connect('2021-07-24', '2021-07-27')
+# connect('2021-07-24', '2021-07-26',0)
 
 
 # In[257]:
