@@ -204,7 +204,7 @@ def prediction(start_date, end_date, best_model, data) :
 
 
        # Make predictions on the test set
-       pred = result.predict(start=test_data.index[0], end=test_data.index[-1])
+       pred = ets_model.predict(start=test_data.index[0], end=test_data.index[-1])
 
        # Calculate MAPE
        mape = calculate_mape(test_data['point_value'], pred)
@@ -272,7 +272,7 @@ def predict1(start_date, end_date, best_model, data):
 
 
         # Make predictions on the test set
-        pred = result.predict(start=test_data.index[0], end=test_data.index[-1])
+        pred = ets_model.predict(start=test_data.index[0], end=test_data.index[-1])
 
         # Calculate MAPE
         mape = calculate_mape(test_data['point_value'], pred)
@@ -282,20 +282,26 @@ def predict1(start_date, end_date, best_model, data):
     return mape, pred 
 
 
-# In[254]:
+# In[270]:
 
 
 # This is the connecter function which gives me all the desired outputs needed for FAST API
 def connect(start_date, end_date):
     data1 = data.loc[start_date:end_date]
-    ind = [data1.index]
-    val = [data1.values]
+    val = data1['point_value'].tolist()
     best = selection(start_date, end_date, data1)
     mape, predi = predict1(start_date, end_date, best, data1)
+    predi = list(predi)
+    ind1 = data1.index.tolist()
+    ind = []
+    for i in ind1:
+        temp = i.strftime('%Y-%m-%d %H:%M:%S')
+        ind.append(temp)
     return best, mape, predi, ind, val
+#     print(ind)
 
 
-# In[255]:
+# In[271]:
 
 
 connect('2021-07-24', '2021-07-27')
@@ -304,9 +310,9 @@ connect('2021-07-24', '2021-07-27')
 # In[257]:
 
 
-b = selection('2019-07-17','2021-07-27',data)
-ma = prediction('2019-07-17', '2021-07-27', b, data)
-print(b,ma)
+# b = selection('2019-07-17','2021-07-27',data)
+# ma = prediction('2019-07-17', '2021-07-27', b, data)
+# print(b,ma)
 
 
 # In[ ]:

@@ -4,8 +4,7 @@ from typing import List, Optional
 from datetime import date, datetime
 import pandas as pd
 import numpy as np
-import import_ipynb
-from DataGenie_HaCK import selection, prediction
+from DataGenie_HaCK import connect
 
 
 
@@ -36,14 +35,21 @@ async def predict(date_from: str, date_to: str, period: Optional[int] = 0):
 
     np.savetxt('C:\\Users\\tejas\\Desktop\\trial.tct', data.values)
     # Call function to determine the best time series model and make predictions
-    best = selection(data)
-    b_mape = prediction(best)
+    best, mape, pred1, ind, val1 = connect(date_from, date_to)
+
+
+    pred = [float(x) for x in pred1]
+    # ind = [float(x) for x in ind1]
+    val = [float(x) for x in val1]
+
+    result = []
+    for i in range(len(pred)):
+        result.append({'point_timestamp': ind[i], 'point_value': val[i], 'yhat': pred[i]})
 
     output = {
         "model": best,
-        "mape": b_mape,
-        # "predictions": results["predictions"].tolist(),
-        # "index": results["predictions"].index.format()
+        "mape": mape,
+        "result": result 
     }
 
     return output
