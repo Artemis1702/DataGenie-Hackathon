@@ -11,7 +11,12 @@ This repository contains my code for the DataGenie hackathon conducted froom 11t
   * SARIMA
   * XGBoost
   * ETS
-* For the selection algorithm I used a few sample datasets as training data and for each dataset I checked which Time Series model gave me the least MAPE value. I then incremented the odds of choosing that Time Series model based on the least MAPE values. In the after training completely I got the Time Series analysis model which had the most number of least MAPE values for prediction of the new dataset given. Then that dataset is also added to the training data to evaluate for the forthcoming datasets. You can enhance this algorithm by using a neural network and confusion matrix, which will give us even greater learing results.
+* For the selection algorithm I used a few sample datasets as training data and for each dataset I checked which Time Series model gave me the least MAPE value. I then incremented the odds of choosing that Time Series model based on the least MAPE values. In the after training completely I got the Time Series analysis model which had the most number of least MAPE values for prediction of the new dataset given. Then that dataset is also added to the training data to evaluate for the forthcoming datasets. You can enhance this algorithm by using a neural network and confusion matrix, which will give us even greater learing results. The datasets used are 
+  * sample_data2 daily (Training)
+  * sample_data3 daily (Training)
+  * sample_data4 daily (Training)
+  * sample_data5 daily (Training)
+  * sample_data1 daily (Testing)
 * I then used the best Time Series model decided by my selection algorithm and used it to predict for the given data. I also added plots to help understand better.
 * For me the best model was XGBoost which gave very minute MAPE(consistently around 0.00034). Due to this If we look at the graphs we would not be able to see much difference.
 * I then created a function called connect() which returns all the parameters required by the response body of the FastApi and takes the request body as the input parameters.
