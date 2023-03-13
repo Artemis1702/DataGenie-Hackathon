@@ -4,6 +4,7 @@ This repository contains my code for the DataGenie hackathon conducted froom 11t
 * Understanding the problem statement
 * Installing fbProphet
 * Trying to use .ipynb files in FastAPI
+* Using numpy stuff in python
 * Deploying the UI
 ## My Approach
 * I implemented a suite of four Time Series analysis models 
@@ -20,7 +21,7 @@ This repository contains my code for the DataGenie hackathon conducted froom 11t
 * I then used the best Time Series model decided by my selection algorithm and used it to predict for the given data. I also added plots to help understand better.
 * For me the best model was XGBoost which gave very minute MAPE(consistently around 0.00034). Due to this If we look at the graphs we would not be able to see much difference.
 * I then created a function called connect() which returns all the parameters required by the response body of the FastApi and takes the request body as the input parameters.
-* I first tried to connect the FastApi app to the .ipynb file but after numerous attempts I decided to convert the .ipynb file to a .py file and then I could use it in the FastApi app.
+* I first tried to connect the FastApi app to the .ipynb file but after numerous attempts I decided to convert the .ipynb file to a .py file and then I could use it in the FastApi app. In FastAPI we will be unable to use numpy stuff as it is not JSON serializable. I changed the arrays to list and the numpy.float values to native float.
 * I then used streamlit to create a simple UI which has the three required fields of the FastApi request body and sends it to the FastAPI app which does the prediction and returns back the response body. I then extracted the points to be plotted from this response body in the streamlit app and plotted it using plotly.express.
 ## Outputs
 * FastAPI outputs
